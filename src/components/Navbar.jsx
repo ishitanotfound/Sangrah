@@ -27,7 +27,7 @@ export default function Navbar() {
             <button className="font-cinzel text-3xl hover:cursor-pointer hover:scale-101">🪷SANGRAH</button>
             <ul className='flex-center gap-5 text-lg'>
                 {navlinks.map((item) => (
-                    <li key={item.id} className='hover:text-[#FFCC00] hover:scale-102'>
+                    <li key={item.id} className='hover:text-[#FF7601] hover:scale-102'>
                         <a href={`${item.id}`}>
                             {item.title}
                         </a>
