@@ -3,6 +3,8 @@ import { useGSAP } from '@gsap/react' ;
 import { ScrollTrigger } from 'gsap/all';
 import gsap from "gsap";
 
+gsap.registerPlugin( ScrollTrigger );
+
 export default function Navbar() {
     useGSAP(() => {
         const timeline = gsap.timeline({
@@ -14,7 +16,7 @@ export default function Navbar() {
         timeline.fromTo('nav', {
             backgroundColor: 'transparent'
         }, {
-            backgroundColor: '#FFF6E3BF', // custom fade
+            backgroundColor: '#eeddca66', // custom fade
             backgoundFilter: 'blur(10px)',
             duration: 1,
             ease:'power1.inOut'
@@ -22,8 +24,8 @@ export default function Navbar() {
     });
 
   return (
-    <nav className='sticky top-0 py-3 px-10'>
-        <div className="navbar flex flex-col md:flex-row md:justify-between items-center gap-2">
+    <nav className='fixed z-5 top-0 py-3 w-full'>
+        <div className="navbar flex flex-col md:flex-row md:justify-between items-center gap-2 px-10">
             <button className="font-cinzel text-3xl hover:cursor-pointer hover:scale-101">🪷SANGRAH</button>
             <ul className='flex-center gap-5 text-lg'>
                 {navlinks.map((item) => (
