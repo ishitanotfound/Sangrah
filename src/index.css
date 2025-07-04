@@ -3,7 +3,7 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-image: url('bg.avif'); 
+  background-image: url('/bg.avif'); 
   color: #2E2E2E;
   scroll-behavior: smooth;
   overflow-x: hidden;
