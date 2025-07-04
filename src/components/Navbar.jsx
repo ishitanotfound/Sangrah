@@ -2,10 +2,12 @@ import { navlinks } from '../../Backend/index';
 import { useGSAP } from '@gsap/react' ;
 import { ScrollTrigger } from 'gsap/all';
 import gsap from "gsap";
+import { useNavigate } from "react-router-dom";
 
 gsap.registerPlugin( ScrollTrigger );
 
 export default function Navbar() {
+    const navigate = useNavigate();
     useGSAP(() => {
         const timeline = gsap.timeline({
             ScrollTrigger: {
@@ -26,7 +28,7 @@ export default function Navbar() {
   return (
     <nav className='fixed z-5 top-0 py-3 w-full'>
         <div className="navbar flex flex-col md:flex-row md:justify-between items-center gap-2 px-10">
-            <button className="font-cinzel text-3xl hover:cursor-pointer hover:scale-101">🪷SANGRAH</button>
+            <button className="font-cinzel text-3xl hover:cursor-pointer hover:scale-101" onClick={()=>{ navigate('/', { replace: true }) }}>🪷SANGRAH</button>
             <ul className='flex-center gap-5 text-lg'>
                 {navlinks.map((item) => (
                     <li key={item.id} className='hover:text-[#FF7601] hover:scale-102'>
