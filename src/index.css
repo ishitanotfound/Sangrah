@@ -28,7 +28,7 @@ label {
 @layer components {
   #LoginSign {
     input {
-      @apply w-65 sm:w-100 px-3 py-1 border-b border-neutral-400 bg-transparent focus:outline-none focus:border-[#FF7601] transition-all
+      @apply w-68 sm:w-100 px-3 py-1 border-b border-neutral-400 bg-transparent focus:outline-none focus:border-[#FF7601] transition-all
     }
     .inpOp{
       @apply flex justify-between gap-3 w-full
