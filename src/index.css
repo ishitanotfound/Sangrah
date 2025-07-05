@@ -25,13 +25,21 @@ body {
 label {
   @apply text-xl text-left
 }
+.hero-button {
+  @apply px-6 py-2 text-lg text-white rounded-full bg-gradient-to-r from-[#f6b36a] via-[#FF7601] to-[#d84b00] hover:from-[#f39553] hover:to-[#c74000] transition-all hover:cursor-pointer duration-300 shadow-md hover:shadow-xl
+}
 @layer components {
-  #LoginSign {
+  #LoginSign, #createList {
     input {
       @apply w-68 sm:w-100 px-3 py-1 border-b border-neutral-400 bg-transparent focus:outline-none focus:border-[#FF7601] transition-all
     }
     .inpOp{
       @apply flex justify-between gap-3 w-full
+    }
+  }
+  #lists-main-layout {
+    .list-group-item {
+      @apply w-65 md:w-150 lg:w-260 xl:w-320 border-b border-neutral-400 hover:border-[#FF7601] transition-all py-3 flex justify-between
     }
   }
 }
