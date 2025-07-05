@@ -46,14 +46,14 @@ export default function Lists() {
       </button>      
 
       {/* List Box */}
-      <div className="w-[90%] bg-[#fff]/30 p-8 sm:p-12 rounded-3xl shadow-lg flex flex-col items-start gap-4 absolute top-43 md:top-35">
+      <div className="w-[90%] bg-[#fff]/30 p-6 sm:p-12 rounded-3xl shadow-lg flex flex-col items-start gap-4 absolute top-43 md:top-35">
         <p className="text-xl text-[#FF7601] hover:cursor-default">All lists</p>
 
         <ul className="list-group flex flex-col gap-2 text-lg w-full">
           {listItems.map((item, index) => (
             <li
               key={index}
-              className="flex justify-between items-center relative py-2"
+              className="flex justify-between items-center relative py-2 px-1"
               ref={(el) => (dropdownRef.current[index] = el)}
             >
               {/* Link to list */}

@@ -5,7 +5,7 @@ export default function CreateList() {
     const navigate = useNavigate();
   return (
     <section id='createList' className="flex-center">
-        <div className="w-[85%] sm:w-[45%] m-auto bg-[#fff]/30 p-8 sm:p-12 rounded-3xl shadow-lg flex flex-col items-center gap-5 absolute top-43 md:top-43">
+        <div className="w-[85%] sm:w-[45%] m-auto bg-[#fff]/30 p-8 sm:p-12 rounded-3xl shadow-lg flex flex-col items-center gap-6 absolute top-43 md:top-43">
 
             {/* New List Title */}
             <p className="text-4xl sm:text-4xl md:text-5xl text-gradient hover:cursor-default font-cinzel">
