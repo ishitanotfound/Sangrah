@@ -84,7 +84,7 @@ export default function Lists() {
                       Rename
                     </li>
                     <li className="px-3 py-1 hover:bg-gray-100 rounded cursor-pointer">
-                      Remove from Group
+                      Add to Group
                     </li>
                     <li className="px-3 py-1 text-red-600 hover:bg-red-100 rounded cursor-pointer">
                       Delete
