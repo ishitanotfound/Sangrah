@@ -35,16 +35,15 @@ export default function Lists() {
   ];
 
   return (
-    <section id="lists-main-layout" className="relative min-h-screen flex flex-col items-center">
-      {/* Create New List button */}
-      <div>
-        <button
-          className="hero-button absolute top-25 md:top-18 right-20"
-          onClick={() => navigate("/createList")}
-        >
-          + Create new List
-        </button>
-      </div>
+    <section id="lists-main-layout" className="relative min-h-screen flex flex-col items-center justify-center">
+      
+      {/* Create New List button */}      
+      <button
+        className="hero-button absolute top-25 md:top-18 right-20"
+        onClick={() => navigate("/createList")}
+      >
+        + Create new List
+      </button>      
 
       {/* List Box */}
       <div className="w-[90%] bg-[#fff]/30 p-8 sm:p-12 rounded-3xl shadow-lg flex flex-col items-start gap-4 absolute top-43 md:top-35">
@@ -54,7 +53,7 @@ export default function Lists() {
           {listItems.map((item, index) => (
             <li
               key={index}
-              className="flex justify-between items-center relative px-4 py-3"
+              className="flex justify-between items-center relative py-2"
               ref={(el) => (dropdownRef.current[index] = el)}
             >
               {/* Link to list */}
