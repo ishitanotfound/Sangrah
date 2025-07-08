@@ -4,7 +4,6 @@ import Navbar from './components/home/Navbar'
 import Login from './components/register/Login';
 import SignUp from './components/register/SignUp';
 import Lists from './components/lists/Lists';
-import More from './components/home/More';
 import Groups from './components/groups/Groups';
 import ListShow from './components/lists/ListShow';
 import CreateList from './components/lists/CreateList';
@@ -25,7 +24,6 @@ function App() {
         <Route path="/groups" element={<Groups/>} />
         <Route path="/createGroup" element={<CreateGroup/>} />
         <Route path="/groupView" element={<GroupView/>} />
-        <Route path="/more" element={<More/>} />
         <Route path="/createList" element={<CreateList/>} />
       </Routes>
     </>
