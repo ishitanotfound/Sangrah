@@ -1,4 +1,4 @@
-import { navlinks } from '../../Backend/index';
+import { navlinks } from '../../../Backend/index';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/all';
 import gsap from 'gsap';

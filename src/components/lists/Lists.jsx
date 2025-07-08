@@ -28,10 +28,6 @@ export default function Lists() {
   const listItems = [
     "An item",
     "Another item",
-    "Second item",
-    "Third item",
-    "Fourth item",
-    "Fifth item",
   ];
 
   return (

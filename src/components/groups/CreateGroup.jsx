@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 
 
-export default function CreateList() {
+export default function CreateGroup() {
     const navigate = useNavigate();
   return (
     <section id='createList' className="flex-center">
@@ -9,27 +9,24 @@ export default function CreateList() {
 
             {/* New List Title */}
             <p className="text-4xl sm:text-4xl md:text-5xl text-gradient hover:cursor-default font-cinzel">
-                Create New List
+                Create New Group
             </p>
 
             {/* form */}
             <form action="#" className="flex flex-col items-center gap-5">
                 <div className="inpOp flex flex-col sm:flex-row sm:items-center sm:gap-5">
-                    <label htmlFor="newListName" className="w-full sm:w-1/3 text-right">Name</label>
-                    <input type="text" name="newListName" id="newListName" placeholder="Enter new list name" />
+                    <label htmlFor="newGroupName" className="w-full sm:w-1/3 text-right">Name</label>
+                    <input type="text" name="newGroupName" id="newGroupName" placeholder="Enter new group name" />
                 </div>
-
                 <div className="inpOp flex flex-col sm:flex-row sm:items-center sm:gap-5">
-                    <label htmlFor="fromDate" className="w-full sm:w-1/3 text-right">Start Date</label>
-                    <input type="date" name="fromDate" id="fromDate" placeholder="Choose start date"/>
+                    <label htmlFor="newGroupPeople" className="w-full sm:w-1/3 text-right">People</label>
+                    <input type="text" name="newGroupPeople" id="newGroupPeople" placeholder="Enter peoples' usernames" />
                 </div>
-
                 <div className="inpOp flex flex-col sm:flex-row sm:items-center sm:gap-5">
-                    <label htmlFor="toDate" className="w-full sm:w-1/3 text-right">End Date</label>
-                    <input type="date" name="toDate" id="toDate" placeholder="Choose end date"/>
+                    <label htmlFor="newGroupPhoto" className="w-full sm:w-1/3 text-right">Group's Photo</label>
+                    <input type="file" accept="image/*" name="newGroupPhoto" id="newGroupPhoto" placeholder="Insert new group's photo" />
                 </div>
-
-                <button className="hero-button" onClick={()=>navigate('/listShow')}>Create New List</button>
+                <button className="hero-button" onClick={()=>navigate('/groups')}>Create New Group</button>
             </form>
         </div>        
     </section>
