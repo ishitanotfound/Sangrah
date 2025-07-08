@@ -43,11 +43,15 @@ export default function Navbar() {
         </button>
 
         <ul className="flex-center gap-5 text-lg">
-          {navlinks.map((item) => (
-            <li key={item.id} className="hover:text-[#FF7601] hover:scale-102">
-              <Link to={item.id}>{item.title}</Link> {/* ✅ converted */}
-            </li>
-          ))}
+          <li key='lists' className="hover:text-[#FF7601] hover:scale-102">
+            <Link to='/lists'>Lists</Link> 
+          </li>
+          <li key='groups' className="hover:text-[#FF7601] hover:scale-102">
+            <Link to='/groups'>Groups</Link> 
+          </li>
+          <li key='more' className="hover:text-[#FF7601] hover:scale-102">
+            <Link to='/more'>More</Link> 
+          </li>
         </ul>
       </div>
     </nav>
