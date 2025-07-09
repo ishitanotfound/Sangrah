@@ -84,8 +84,11 @@ export default function Hero() {
         
        {/* title and button */}
 
-        <div className="absolute top-55 sm:top-20 left-1/2 -translate-x-1/2 -translate-y-1/2; flex flex-col items-center gap-3 sm:gap-13">            
+        <div className="absolute top-50 sm:top-20 left-1/2 -translate-x-1/2 -translate-y-1/2; flex flex-col items-center gap-3 sm:gap-5">            
             <h1 className="title font-cinzel text-center w-70 md:w-auto text-5xl md:text-6xl xl:text-8xl font-semibold">SANGRAH</h1>
+            <p className="font-cinzel text-2xl text-[#9D0208] text-center opacity-0 animate-[fadeInUp_0.6s_ease-out_2s_forwards]">
+            Your space to collect, organize, and share life’s to-dos with those who matter.
+            </p>
             <button className="hero-button font-cinzel" onClick={ () => navigate('/login') }>
                 LogIn / SignUP
             </button>

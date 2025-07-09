@@ -6,6 +6,9 @@ export default function ListShow() {
         List Name
       </p>
 
+      {/* Gita-quote */}
+      <p className="font-cinzel text-lg sm:text-xl text-[#9D0208] text-center"><i> “There is nothing lost or wasted in this life. Even a little progress on the path of truth can protect you from great fear.”</i></p>
+
       {/* Add New Task Section */}
       <div className="w-full flex flex-col sm:flex-row gap-4 sm:gap-6 items-stretch">
         {/* input */}

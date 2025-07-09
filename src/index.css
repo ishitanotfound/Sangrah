@@ -28,6 +28,17 @@ label {
 .hero-button {
   @apply px-6 py-2 text-lg text-white rounded-full bg-gradient-to-r from-[#f6b36a] via-[#FF7601] to-[#d84b00] hover:from-[#f39553] hover:to-[#c74000] transition-all hover:cursor-pointer duration-300 shadow-md hover:shadow-xl
 }
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @layer components {
   #LoginSign, #createList {
     input {
