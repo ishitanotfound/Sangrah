@@ -42,20 +42,28 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-// LOGIN
 router.post('/login', async (req, res) => {
+  console.log("💡 /login hit");
   const { username, password } = req.body;
+  console.log("🧠 Received username:", username);
+  console.log("🧠 Received password:", password);
 
   try {
     const user = await User.findOne({ username });
+    console.log("📁 Fetched User from DB:", user);
+
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!user || !isMatch) {
+    console.log("✅ Password match:", isMatch);
+
+    if (!isMatch) {
       return res.status(401).json({ error: 'Invalid credentials' });
-}
+    }
 
     const token = generateToken(user);
-
     res.status(200).json({
       message: 'Login successful',
       token,
@@ -68,9 +76,11 @@ router.post('/login', async (req, res) => {
       },
     });
   } catch (err) {
+    console.error("❌ Login Error:", err);
     res.status(500).json({ error: err.message });
   }
 });
+
 
 // VIEW PROTECTED PROFILE
 router.get('/account', verifyToken, async (req, res) => {

@@ -1,6 +1,6 @@
+const dotenv = require('dotenv');
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const listRoutes = require('./routes/listRoutes');
@@ -9,6 +9,8 @@ const gitaAPI = require('./routes/gitaAPI');
 
 dotenv.config();
 const app = express();
+console.log("🔐 Loaded MONGO_URI:", process.env.MONGO_URI);
+
 
 connectDB(); 
 

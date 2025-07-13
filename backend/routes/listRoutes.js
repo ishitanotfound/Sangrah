@@ -102,9 +102,26 @@ router.post('/:id', verifyToken, async (req, res) => {
     const { newTask } = req.body;
     if(!newTask) return res.status(400).json({error: 'No task provided!'});        
         
-    const list = await List.findOne({_id: id, createdBy: req.user.id});
-    if(!list) return res.status(404).json({error: 'No list found!'});
-        
+    const list = await List.findById(id).populate('group');
+
+    if (!list) return res.status(404).json({ error: 'No list found!' });
+
+    // CASE 1: personal list
+    if (!list.group) {
+      if (list.createdBy.toString() !== req.user.id) {
+        return res.status(403).json({ error: 'You are not authorized to modify this personal list!' });
+      }
+    }
+
+    // CASE 2: group list
+    if (list.group) {
+      const group = list.group;
+
+      if (!group.members.includes(req.user.id)) {
+        return res.status(403).json({ error: 'You are not authorized. Not a group member!' });
+      }
+    }
+            
     list.tasks.push( { title: newTask, completed: false } );
         
     await list.save();
@@ -123,8 +140,25 @@ router.get('/:id', verifyToken, async (req, res) => {
     const { id } = req.params;
     if(!id) return res.status(400).json({error: 'No list ID provided!'});   
 
-    const list = await List.findOne({_id: id, createdBy: req.user.id});
-    if(!list) return res.status(404).json({error: 'No list found!'});
+    const list = await List.findById(id).populate('group');
+
+    if (!list) return res.status(404).json({ error: 'No list found!' });
+
+    // CASE 1: personal list
+    if (!list.group) {
+      if (list.createdBy.toString() !== req.user.id) {
+        return res.status(403).json({ error: 'You are not authorized to modify this personal list!' });
+      }
+    }
+
+    // CASE 2: group list
+    if (list.group) {
+      const group = list.group;
+
+      if (!group.members.includes(req.user.id)) {
+        return res.status(403).json({ error: 'You are not authorized. Not a group member!' });
+      }
+    }
 
     res.status(200).json({message: 'task fetched successfully', tasks:list.tasks, title:list.name});
 
@@ -134,46 +168,79 @@ router.get('/:id', verifyToken, async (req, res) => {
   }
 })
 
-// UPDATE TASKS  - ( for checked toggle )
+// UPDATE TASKS - ( for checked toggle )
 router.put('/:listId/:taskIndex', verifyToken, async (req, res) => {
   try {
     const { listId, taskIndex } = req.params;
     const { title, completed } = req.body;
 
-    const list = await List.findOne({ _id: listId, createdBy: req.user.id });
+    const list = await List.findById(listId).populate('group');
+
     if (!list) return res.status(404).json({ error: 'List not found!' });
+
+    // personal list
+    if (!list.group) {
+      if (list.createdBy.toString() !== req.user.id) {
+        return res.status(403).json({ error: 'You are not authorized to modify this personal list!' });
+      }
+    }
+
+    // group list
+    if (list.group) {
+      const group = list.group;
+      const memberIds = group.members.map(m => m.toString());
+      if (!memberIds.includes(req.user.id)) {
+        return res.status(403).json({ error: 'You are not authorized. Not a group member!' });
+      }
+    }
 
     if (taskIndex < 0 || taskIndex >= list.tasks.length) {
       return res.status(400).json({ error: 'Invalid task index!' });
     }
 
-    // 🧠 Update the task
     if (title !== undefined) list.tasks[taskIndex].title = title;
     if (completed !== undefined) list.tasks[taskIndex].completed = completed;
 
     await list.save();
 
-    return res.status(200).json({ message: 'Task updated!', list }); // {_id, name, fromDate, toDate, createdBy, group}
+    return res.status(200).json({ message: 'Task updated!', list });
   } catch (err) {
     console.log('Error updating task:', err);
     res.status(500).json({ error: err.message });
   }
 });
 
+
 // DELETE A TASK
-router.delete('/:listId/:taskIndex', verifyToken, async (req, res) => { 
+router.delete('/:listId/:taskIndex', verifyToken, async (req, res) => {
   try {
     const { listId, taskIndex } = req.params;
 
-    const list = await List.findOne({ _id: listId, createdBy: req.user.id });
+    const list = await List.findById(listId).populate('group');
 
     if (!list) return res.status(404).json({ error: 'List not found!' });
+
+    // personal list
+    if (!list.group) {
+      if (list.createdBy.toString() !== req.user.id) {
+        return res.status(403).json({ error: 'You are not authorized to modify this personal list!' });
+      }
+    }
+
+    // group list
+    if (list.group) {
+      const group = list.group;
+      const memberIds = group.members.map(m => m.toString());
+      if (!memberIds.includes(req.user.id)) {
+        return res.status(403).json({ error: 'You are not authorized. Not a group member!' });
+      }
+    }
 
     if (taskIndex < 0 || taskIndex >= list.tasks.length) {
       return res.status(400).json({ error: 'Invalid task index!' });
     }
 
-    list.tasks.splice(taskIndex, 1); // remove the task at index
+    list.tasks.splice(taskIndex, 1); // remove the task
 
     await list.save();
 
