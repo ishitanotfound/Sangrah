@@ -6,13 +6,17 @@ import axios from "axios";
 export const createGroup = async (formData) => {
   try {
     const res = await axios.post(`${baseURL}/api/groups`, formData, {
-      headers: getAuthHeader(),
+      headers: {
+        ...getAuthHeader(),
+        'Content-Type': 'multipart/form-data', // 👈 necessary for file upload
+      },
     });
-    return res.data; // should return { message: ..., group: {_id, name,createdBy,members,groupPic,lists} }
+    return res.data;
   } catch (error) {
     return { error: error.response?.data?.error || "Something went wrong" };
   }
 };
+
 
 // FETCH GROUPS
 export const fetchGroups = async () => {

@@ -7,14 +7,25 @@ export default function CreateGroup() {
     const { register, handleSubmit, watch, formState:{errors}} = useForm();
 
     const onSubmit = async (data) => {
-      const res = await createGroup(data);
-      if (res.group) {
-        console.log(res.message);
-        navigate('/groups');
-      } else {
-        console.log(res.error);
-      }
-    }
+  const formData = new FormData();
+
+  formData.append('name', data.name);
+  formData.append('memberUsernames', data.memberUsernames); 
+
+  if (data.newGroupPhoto?.[0]) {
+    formData.append('groupPic', data.newGroupPhoto[0]); 
+  }
+
+  const res = await createGroup(formData);  
+
+  if (res.group) {
+    console.log(res.message);
+    navigate('/groups');
+  } else {
+    console.log(res.error);
+  }
+}
+
 
   return (
     <section id='createList' className="flex-center">
