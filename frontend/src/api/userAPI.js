@@ -1,8 +1,6 @@
-const baseURL = "https://sangrah-backend.onrender.com";
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 import { getAuthHeader } from "./authHeader";
 import axios from 'axios';
-
-console.log("🧪 BACKEND URL:", import.meta.env.VITE_BACKEND_URL);
 
 // SIGNUP
 export const signUpUser = async (formData) => {
