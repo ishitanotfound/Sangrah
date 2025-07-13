@@ -1,4 +1,4 @@
-const baseURL = import.meta.env.VITE_BACKEND_URL;
+const baseURL = "https://sangrah-backend.onrender.com";
 import { getAuthHeader } from "./authHeader";
 import axios from 'axios';
 
