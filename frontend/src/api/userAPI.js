@@ -2,6 +2,8 @@ const baseURL = import.meta.env.VITE_BACKEND_URL;
 import { getAuthHeader } from "./authHeader";
 import axios from 'axios';
 
+console.log("🧪 BACKEND URL:", import.meta.env.VITE_BACKEND_URL);
+
 // SIGNUP
 export const signUpUser = async (formData) => {
   const res = await fetch(`${baseURL}/api/users/signup`, {  // req bhej rhe h!
