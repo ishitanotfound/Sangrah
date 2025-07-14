@@ -1,12 +1,13 @@
 const baseURL = import.meta.env.VITE_BACKEND_URL;
 import { getAuthHeader } from "./authHeader";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 
 // CREATE LIST
 export const createList = async (formData) => {
   try {
     const res = await axios.post(`${baseURL}/api/lists`, formData, {
-      headers: getAuthHeader(),
+      headers: getAuthHeader(), withCredentials: true
     });
     return res.data; 
   } catch (error) {
@@ -17,7 +18,7 @@ export const createList = async (formData) => {
 // VIEW LISTS
 export const fetchLists = async () => {
   try {
-    const res = await axios.get(`${baseURL}/api/lists`, { headers : getAuthHeader() });
+    const res = await axios.get(`${baseURL}/api/lists`, { headers : getAuthHeader(), withCredentials: true });
     return res.data; // { message: ..., lists: { name, toDate, fromDate... } }
   } catch (error) {
     return { error: error.response?.data?.error || "Something went wrong" };
@@ -30,7 +31,7 @@ export const updateList = async (id, formData) => {
     const res = await axios.put(
       `${baseURL}/api/lists/${id}`,
       formData,
-      { headers: getAuthHeader() }
+      { headers: getAuthHeader(), withCredentials: true }
     );
     return res.data;
   } catch (error) {
@@ -44,7 +45,7 @@ export const updateList = async (id, formData) => {
 export const deleteList = async (id) => {
   try {
     const res = await axios.delete(`${baseURL}/api/lists/${id}`, {
-      headers: getAuthHeader(),
+      headers: getAuthHeader(), withCredentials: true
     });
     return res.data; // should return { message: ... }
   } catch (error) {
@@ -56,7 +57,7 @@ export const deleteList = async (id) => {
 export const createTask = async (id, newTask) => {
   try {
     const res = await axios.post(`${baseURL}/api/lists/${id}`, { newTask }, {
-      headers: getAuthHeader(),
+      headers: getAuthHeader(), withCredentials: true
     });
     return res.data;
   } catch (error) {
@@ -70,7 +71,7 @@ export const createTask = async (id, newTask) => {
 // GET TASKS 
 export const fetchTasks = async (id) => {
   try {
-    const res = await axios.get(`${baseURL}/api/lists/${id}`, { headers: getAuthHeader() });
+    const res = await axios.get(`${baseURL}/api/lists/${id}`, { headers: getAuthHeader(), withCredentials: true });
     return res.data;
   } catch (error) {
     return { error: error.response?.data?.error || "Something went wrong"}
@@ -80,7 +81,7 @@ export const fetchTasks = async (id) => {
 // UPDATE TASKS
 export const updateTask = async (listId, taskIndex, data) => {
   try {
-    const res = await axios.put(`${baseURL}/api/lists/${listId}/${taskIndex}`, data, { headers: getAuthHeader() });
+    const res = await axios.put(`${baseURL}/api/lists/${listId}/${taskIndex}`, data, { headers: getAuthHeader(), withCredentials: true });
     return res.data; // message, lists: { name, toDate, fromDate... } 
   } catch (error) {
     return { error: error.response?.data?.error || "Something went wrong"}
@@ -90,7 +91,7 @@ export const updateTask = async (listId, taskIndex, data) => {
 // DELETE TASKS
 export const deleteTask = async (listId, taskIndex) => {
   try {
-    const res = await axios.delete(`${baseURL}/api/lists/${listId}/${taskIndex}`, { headers: getAuthHeader() });
+    const res = await axios.delete(`${baseURL}/api/lists/${listId}/${taskIndex}`, { headers: getAuthHeader(), withCredentials: true });
     return res.data; // message, lists: { name, toDate, fromDate... } 
   } catch (error) {
     return { error: error.response?.data?.error || "Something went wrong"}
