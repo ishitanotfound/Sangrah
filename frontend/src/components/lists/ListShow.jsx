@@ -22,7 +22,7 @@ export default function ListShow() {
 
     const fetchQuote = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/gitaquote'); // or your deployed backend URL
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/gitaquote`);
         const data = await res.json();
         setGitaQuote(data);
       } catch (err) {
