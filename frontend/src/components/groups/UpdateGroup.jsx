@@ -4,14 +4,23 @@ import { updateGroup } from "../../api/groupAPI";
 
 export default function UpdateGroup() {
     const navigate = useNavigate();
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState:{isSubmitting} } = useForm();
     const { id } = useParams();
 
+    const delay = async (d) => {
+        return new promise ((resolve, reject) => {
+            setTimeout(()=>{
+                resolve();
+            }, d * 1000);
+        })
+    }
+
     const onSubmit = async (data) => {
+        delay(4);
         const res = await updateGroup(id, data);
         if (res.group) {
             console.log(res.message);
-            navigate('/groups');
+            navigate('/groups', { replace: true });
         } else {
             console.log(res.error);
         }
@@ -27,7 +36,9 @@ export default function UpdateGroup() {
             </p>
 
             {/* UPDATE-GROUP FORM ------------------------------------*/}
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-5 w-full">
+
+                {isSubmitting && <p className="text-green-700 text-center">Form is Submitting...</p>}
                 
                 {/* GROUP-NAME */}
                 <div className="inpOp flex flex-col sm:flex-row sm:items-center sm:gap-5">
@@ -48,7 +59,7 @@ export default function UpdateGroup() {
                 </div>
                 
                 {/* UPDATE-GROUP BUTTON */}
-                <button className="hero-button">Update</button>
+                <button disabled={isSubmitting} className="hero-button">Update</button>
             </form>
             
         </div>        

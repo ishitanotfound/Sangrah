@@ -88,7 +88,7 @@ export default function Lists() {
                     handleDropdown(index);
                   }}
                 >
-                  <span className="material-symbols-outlined">more_vert</span>
+                  <span className="material-symbols-outlined cursor-pointer">more_vert</span>
                 </button>
 
                 {openDropdown === index && (
@@ -124,24 +124,32 @@ export default function Lists() {
             </p>
             <div className="flex justify-center gap-3">
               <button
-                className="px-4 py-2 rounded-full border border-gray-400 text-gray-800 hover:bg-gray-100 transition"
+                className="px-4 py-2 rounded-full border border-gray-400 text-gray-800 hover:bg-gray-100 transition cursor-pointer"
                 onClick={() => setShowModal(false)}
               >
                 Cancel
               </button>
               <button
-                className="px-4 py-2 rounded-full bg-gradient-to-r from-[#E85D04] via-[#9D0208] to-[#4B0000] text-white hover:from-[#f06a1a] hover:to-[#3a0000] transition-all"
+                className="px-4 py-2 rounded-full bg-gradient-to-r from-[#E85D04] via-[#9D0208] to-[#4B0000] text-white hover:from-[#f06a1a] hover:to-[#3a0000] transition-all cursor-pointer"
                 onClick={async () => {
                   const res = await deleteList(listToDelete._id);
                     if (res.message) {
                       console.log(res.message);
-                      navigate("/lists"); 
+                      const updated = await fetchLists();
+                      if (updated.lists.length === 0) {
+                        console.log("This user has no personal lists yet.");
+                        setListItems([]); 
+                      } else {
+                        setListItems(updated.lists);
+                      }
+      
                     } else {
                       console.log("Delete error:", res.error);
                   }
                   setShowModal(false);
                 }}
               >
+                {/* DELETE LIST */}
                 Delete
               </button>
             </div>

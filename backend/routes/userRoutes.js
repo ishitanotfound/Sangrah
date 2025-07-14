@@ -43,21 +43,16 @@ router.post('/signup', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-  console.log("💡 /login hit");
   const { username, password } = req.body;
-  console.log("🧠 Received username:", username);
-  console.log("🧠 Received password:", password);
 
   try {
     const user = await User.findOne({ username });
-    console.log("📁 Fetched User from DB:", user);
 
     if (!user) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log("✅ Password match:", isMatch);
 
     if (!isMatch) {
       return res.status(401).json({ error: 'Invalid credentials' });
@@ -76,7 +71,6 @@ router.post('/login', async (req, res) => {
       },
     });
   } catch (err) {
-    console.error("❌ Login Error:", err);
     res.status(500).json({ error: err.message });
   }
 });

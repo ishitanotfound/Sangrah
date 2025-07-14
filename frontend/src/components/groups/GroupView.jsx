@@ -64,29 +64,26 @@ export default function GroupView() {
           All lists
         </p>
 
-        {/* DISPLATING ALL GROUPS */}
+        {/* DISPLATING ALL GROUPS-LISTS */}
         <div className="all-lists-box w-full pt-4 sm:px-10 flex flex-wrap justify-center sm:justify-start gap-4">
+          { ( allGLists.length === 0) ? <p className="text-center text-gray-600">No Group Lists to Show!</p> : null }
           {allGLists.map((l,i) => (
             <div
               key={i}   //index of lists 
               className="w-full sm:w-auto cursor-pointer"
               ref={(el) => (dropdownRef.current[i] = el)}
-              onClick={() => navigate(`/listShow/${l._id}`)} // to individual list, GET on /lists/:id
+              onClick={() => navigate(`/listShow/${l._id}`)} 
             >
               <div className="card bg-[#fff]/30 rounded-3xl shadow-sm p-5 sm:p-5 w-full sm:w-85 max-w-xs">
                 <div className="card-body flex flex-col gap-1">
                   <div className="flex justify-between relative">
                     
                     <div>
-                      {/* list.name */}
                       <h2 className="card-title text-xl sm:text-2xl text-gray-700 font-semibold">
                         {l.name}
-                      </h2>
-                      {/* list.fromDAte */}
-                      <h3 className="text-sm sm:text-base"><b>From: </b>{l.fromDate?.slice(0, 10)}</h3> 
-                      {/* list.toDate */}
-                      <h3 className="text-sm sm:text-base"><b>To: </b>{l.toDate?.slice(0, 10)}</h3>
-                      {/* list.craetedBy */}
+                      </h2>                     
+                      <h3 className="text-sm sm:text-base"><b>From: </b>{l.fromDate?.slice(0, 10)}</h3>                       
+                      <h3 className="text-sm sm:text-base"><b>To: </b>{l.toDate?.slice(0, 10)}</h3>                     
                       <h3 className="text-sm sm:text-base"><b>Created by: </b>{l.createdBy?.username}</h3>
                     </div>
 
@@ -112,7 +109,7 @@ export default function GroupView() {
                           className="px-3 py-1 hover:bg-gray-100 rounded cursor-pointer"
                           onClick={() => navigate(`/updateList/${l._id}`)}
                         >
-                          {/* PUT on lists/:id */}
+                          {/* EDIT */}
                           Edit List
                         </li>
                         <li
@@ -159,27 +156,33 @@ export default function GroupView() {
             </p>
             <div className="flex justify-center gap-3">
               <button
-                className="px-4 py-2 rounded-full border border-gray-400 text-gray-800 hover:bg-gray-100 transition"
+                className="px-4 py-2 rounded-full border border-gray-400 text-gray-800 hover:bg-gray-100 transition cursor-pointer"
                 onClick={() => setShowModal(false)}
               >
                 Cancel
               </button>
               <button
-                className="px-4 py-2 rounded-full bg-gradient-to-r from-[#E85D04] via-[#9D0208] to-[#4B0000] text-white hover:from-[#f06a1a] hover:to-[#3a0000] transition-all"
+                className="px-4 py-2 rounded-full bg-gradient-to-r from-[#E85D04] via-[#9D0208] to-[#4B0000] text-white hover:from-[#f06a1a] hover:to-[#3a0000] transition-all cursor-pointer"
                 onClick={async () => {
-                  const res = await deleteList(listToDelete._id);
+                  const res = await deleteList(listToDelete?._id);
                   if (res.message) {
                     console.log(res.message);
-                    // Refresh the list of group lists
                     const updated = await fetchGLists(id);
-                    if (updated.groupList) setAllGLists(updated.groupList);
+                    if (updated.groupList.length === 0) {
+                      console.log("This group has no lists yet.");
+                      setAllGLists([]); 
+                    } else {
+                      setAllGLists(updated.groupList);
+                    }
+
                   } else {
                     console.log("Delete error:", res.error);
                   }
                   setShowModal(false);
                 }}
               >
-                Delete
+                {/* DELETE GROUP LIST */}
+                Delete 
               </button>
             </div>
           </div>

@@ -2,6 +2,7 @@ const baseURL = import.meta.env.VITE_BACKEND_URL;
 import { getAuthHeader } from "./authHeader";
 import axios from "axios";
 
+// CREATE LIST
 export const createList = async (formData) => {
   try {
     const res = await axios.post(`${baseURL}/api/lists`, formData, {
@@ -9,11 +10,11 @@ export const createList = async (formData) => {
     });
     return res.data; 
   } catch (error) {
-    console.error("🔥 Axios Error:", error);
     return { error: error.response?.data?.error || "Something went wrong" };
   }
 };
 
+// VIEW LISTS
 export const fetchLists = async () => {
   try {
     const res = await axios.get(`${baseURL}/api/lists`, { headers : getAuthHeader() });

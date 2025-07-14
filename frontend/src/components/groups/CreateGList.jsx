@@ -1,17 +1,17 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { createGList } from "../../api/groupAPI"; 
-import { useForm } from "react-hook-form"; 
+import { appendErrors, useForm } from "react-hook-form"; 
 
 export default function CreateGList() {
     const navigate = useNavigate();
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState:{errors} } = useForm();
     const { id } = useParams();
 
     const onSubmit = async (formData) => {
       const res = await createGList(id, formData);
       if ( res.list ) {
         console.log(res.message);
-        navigate(`/lists/${res.list._id}`); //sending group _id!!!
+        navigate(`/lists/${res.list._id}`, { replace: true }); //sending group _id!!!
       } else {
         console.log(res.error);
       }
@@ -26,24 +26,25 @@ export default function CreateGList() {
             </p>
 
             {/* CREATE-NEW-LIST FORM----------------------------------------------------- */}
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-5 w-full">
 
                 {/* LIST-NAME */}
                 <div className="inpOp flex flex-col sm:flex-row sm:items-center sm:gap-5">
-                    <label htmlFor="newListName" className="w-full sm:w-1/3 text-right">Name</label>
-                    <input type="text" {...register('name')} id="newListName" placeholder="Enter new list name" />
+                  <label htmlFor="newListName" className="w-full sm:w-1/3 text-right">Name</label>
+                  <input type="text" {...register('name', {required: {value:true, message: "Please provide a Group Name!"}})} id="newListName" placeholder="Enter new list name" />
                 </div>
+                {errors.name && <p className="text-red-600 text-center">{errors.name.message}</p>}
 
                 {/* FROM-DATE, extract onlt date part */}
                 <div className="inpOp flex flex-col sm:flex-row sm:items-center sm:gap-5">
-                    <label htmlFor="fromDate" className="w-full sm:w-1/3 text-right">From</label>
-                    <input type="date" {...register('fromDate')} id="fromDate" placeholder="Choose start date"/>
+                  <label htmlFor="fromDate" className="w-full sm:w-1/3 text-right">From</label>
+                  <input type="date" {...register('fromDate')} id="fromDate" placeholder="Choose start date"/>
                 </div>
 
                 {/* TO-DATE, extract onlt date part */}
                 <div className="inpOp flex flex-col sm:flex-row sm:items-center sm:gap-5">
-                    <label htmlFor="toDate" className="w-full sm:w-1/3 text-right">To</label>
-                    <input type="date" {...register('toDate')} id="toDate" placeholder="Choose end date"/>
+                  <label htmlFor="toDate" className="w-full sm:w-1/3 text-right">To</label>
+                  <input type="date" {...register('toDate')} id="toDate" placeholder="Choose end date"/>
                 </div>
 
                 {/* SUBMIT BUTTON */}

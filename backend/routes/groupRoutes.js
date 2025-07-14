@@ -19,7 +19,12 @@ router.post('/', verifyToken, upload.single('groupPic'), async (req, res) => {
 
     const groupPic = req.file?.path || DEFAULT_GROUP_PIC; 
 
-    const members = Array.isArray(memberUsernames) ?memberUsernames : [memberUsernames];
+    let members;
+    if (Array.isArray(memberUsernames)) {
+    members = memberUsernames;
+    } else {
+    members = memberUsernames?.split(',').map(m => m.trim());  // 👈 magic
+    }
 
     // Step 1: Find users by username
     const users = await User.find({ username: { $in: members } });
@@ -59,9 +64,11 @@ router.get('/', verifyToken, async (req, res) => {
     try {
         const groups = await Group.find({ members: req.user.id }).populate('members', 'username');
 
-        if ( groups.length === 0 ) return res.status(404).json({error: "No groups were found!"});
+        return res.status(200).json({
+        message: groups.length === 0 ? "No groups to show!" : "All groups fetched!",
+        groups: groups || [],
+});
 
-        return res.status(200).json({message: "All groups fetched!", groups});
 
     } catch ( err ) {
         console.log("error in displaying all groups", err);
@@ -71,39 +78,50 @@ router.get('/', verifyToken, async (req, res) => {
 
 // UPDATE A GROUP
 router.put('/:id', verifyToken, upload.single('groupPic'), async (req, res) => { 
-    try {
-        const { id } = req.params;
-        if ( !id ) return res.status(401).json({error: "group ID not provided!"});
+  try {
+    const { id } = req.params;
+    if (!id) return res.status(401).json({ error: "group ID not provided!" });
 
-        const { name, memberUsernames=[] } = req.body;
-        const groupPic = req.file?.path; 
+    const { name, memberUsernames } = req.body;
+    const groupPic = req.file?.path;
 
-        const group = await Group.findOne({_id: id});
-        if ( !group ) return res.status(404).json({error: "group not found!"});
+    const group = await Group.findOne({ _id: id });
+    if (!group) return res.status(404).json({ error: "group not found!" });
 
-        if (name) group.name = name;
-        if (memberUsernames) {
-            const members = Array.isArray(memberUsernames) ? memberUsernames : [ memberUsernames ];
-            const users = await User.find({username: {$in:members}});
-            if (users.length !== members.length) {
-                const validUsernames = users.map( (user) => user.username );
-                const invalidUsernames = members.filter(u => !validUsernames.includes(u));
-                return res.status(401).json({error: `Following invalid usernames entered: ${invalidUsernames}`});
-            }
-            const memberIds = users.map(u => u._id);
-            group.members = [...new Set([...memberIds, req.user.id])];
-        }
-        if (groupPic) group.groupPic = groupPic;
+    if (name) group.name = name;
 
-        await group.save();
+    if (memberUsernames !== undefined) {
+      let members;
+      if (Array.isArray(memberUsernames)) {
+      members = memberUsernames;
+      } else {
+        members = memberUsernames?.split(',').map(m => m.trim());  // 👈 magic
+      }
 
-        return res.status(200).json({message: "Group updated successfully", group});
-    
-    } catch (err) {
-        console.log("Error in updating group", err);
-        res.status(500).json({error: err.message});
+      const users = await User.find({ username: { $in: members } });
+
+      if (users.length !== members.length) {
+        const validUsernames = users.map(user => user.username);
+        const invalidUsernames = members.filter(u => !validUsernames.includes(u));
+        return res.status(401).json({ error: `Following invalid usernames entered: ${invalidUsernames}` });
+      }
+
+      const memberIds = users.map(u => u._id);
+      group.members = [...new Set([...memberIds, req.user.id])];
     }
-})
+
+    if (groupPic) group.groupPic = groupPic;
+
+    await group.save();
+
+    return res.status(200).json({ message: "Group updated successfully", group });
+
+  } catch (err) {
+    console.log("Error in updating group", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 // DELETE A GROUP
 router.delete('/:id', verifyToken, async (req, res) => { 
@@ -160,31 +178,31 @@ router.post('/:id', verifyToken, async (req, res) => {
 
 // VIEW ALL LISTS OF A GROUP
 router.get('/:id', verifyToken, async (req, res) => { 
-    try {
-        const { id } = req.params;
-        if ( !id ) return res.status(401).json({error: "Group ID not provided!"});
+  try {
+    const { id } = req.params;
+    if (!id) return res.status(401).json({ error: "Group ID not provided!" });
 
-        const group = await Group.findOne({ _id: id })
-          .populate({
-            path: 'lists',
-            select: 'name fromDate toDate createdBy tasks',  
-            populate: {
-                path: 'createdBy',
-                select: 'username'
-            }
-            });
+    const group = await Group.findOne({ _id: id })
+      .populate({
+        path: 'lists',
+        select: 'name fromDate toDate createdBy tasks',
+        populate: {
+          path: 'createdBy',
+          select: 'username'
+        }
+      });
 
-        if (!group) return res.status(404).json({ error: "Group not found!" });
+    if (!group) return res.status(404).json({ error: "Group not found!" });
 
-        if (!group.lists || group.lists.length === 0)
-        return res.status(404).json({ error: "No lists found in this group!" });
+    res.status(200).json({
+      message: "All lists of group fetched!",
+      groupList: group.lists || [],
+    });
 
-        res.status(200).json({ message: "All lists of group fetched!", groupList: group.lists });
-
-    } catch (err) {
-        console.log("error in fetching all lists of the group!", err);
-        res.status(500).json({error: err.message});
-    }
-})
+  } catch (err) {
+    console.log("error in fetching all lists of the group!", err);
+    res.status(500).json({ error: err.message });
+  }
+});
 
 module.exports = router;

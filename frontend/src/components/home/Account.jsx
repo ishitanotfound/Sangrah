@@ -9,7 +9,7 @@ export default function Account() {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const [user, setUser] = useState({});
-  const { register, handleSubmit} = useForm();
+  const { register, handleSubmit, formState:{isSubmitting}} = useForm();
 
   useEffect(() => {
     const getProfile = async () => {
@@ -24,7 +24,17 @@ export default function Account() {
     getProfile();
   }, []);
 
+  const delay = async (d) => {
+    return new promise ((resolve, reject) => {
+      setTimeout(()=>{
+        resolve();
+      }, d * 1000);
+    })
+  }
+
   const onSubmit = async (data) => {
+    delay(5);
+
     const formData = new FormData();
 
     formData.append('name', data.name);
@@ -39,7 +49,8 @@ export default function Account() {
     const res = await updateProfile(formData);
     if (res.user) {
       console.log(res.message);
-      navigate('/account');
+      const updated = await fetchProfile();
+      setUser(updated.user);
     } else {
       console.log('Error in updating account!', res.error);
     }
@@ -93,18 +104,21 @@ export default function Account() {
           {/* PROFILE PIC */}
           <div className="inpOp flex flex-col sm:flex-row sm:items-center sm:gap-5">
             <label htmlFor="profilePic" className="w-full sm:w-1/3 text-right">Upload Picture</label>
-            <input type="file" {...register("profilePic")} id="profilePic" />
+            <input type="file" {...register("profilePic")} id="profilePic" className='cursor-pointer'/>
           </div>
+          
+          {isSubmitting && <p className='text-green-700 text-center'>Updating the Account...</p>}
 
           {/* UPDATE BUTTON */}
-          <button className="w-full py-3 font-cinzel text-white rounded-full bg-gradient-to-r from-[#f6b36a] via-[#FF7601] to-[#d84b00] hover:from-[#f39553] hover:to-[#c74000] transition-all duration-300 shadow-md hover:shadow-xl">
+          <button disabled={isSubmitting} className="w-full py-3 font-cinzel text-white rounded-full bg-gradient-to-r from-[#f6b36a] via-[#FF7601] to-[#d84b00] hover:from-[#f39553] hover:to-[#c74000] transition-all duration-300 shadow-md hover:shadow-xl cursor-pointer">
             Update Account
           </button>
 
           {/* DELETE BUTTON */}
           <button
+            disabled={isSubmitting}
             type="button"
-            className="w-full py-3 font-cinzel text-white rounded-full bg-gradient-to-r from-[#E85D04] via-[#C7360D] to-[#9D0208] hover:from-[#f06a1a] hover:to-[#7A0106] transition-all duration-300 shadow-md hover:shadow-xl"
+            className="w-full py-3 font-cinzel text-white rounded-full bg-gradient-to-r from-[#E85D04] via-[#C7360D] to-[#9D0208] hover:from-[#f06a1a] hover:to-[#7A0106] transition-all duration-300 shadow-md hover:shadow-xl cursor-pointer"
             onClick={() => setShowModal(true)}
           >
             Delete Account
@@ -116,7 +130,7 @@ export default function Account() {
       {/* DELETE-MODAL =======================================================================*/}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs bg-black/40 transition-opacity duration-300">
-          <div className="bg-white/70 text-[#4B0000] w-[90%] max-w-md rounded-2xl p-6 shadow-2xl animate-fadeIn backdrop-blur-md">
+          <div className="bg-white/80 text-[#4B0000] w-[90%] max-w-md rounded-2xl p-6 shadow-2xl animate-fadeIn backdrop-blur-md">
             
             {/* MODAL-TITLE */}
             <h2 className="text-2xl font-bold text-center text-[#9D0208] mb-2">
@@ -133,7 +147,7 @@ export default function Account() {
               
               {/* CANCEL */}
               <button
-                className="px-4 py-2 rounded-full border border-gray-400 text-gray-800 hover:bg-gray-100 transition"
+                className="px-4 py-2 rounded-full border border-gray-400 text-gray-800 hover:bg-gray-100 transition cursor-pointer"
                 onClick={() => setShowModal(false)}
               >
                 Cancel
@@ -141,7 +155,7 @@ export default function Account() {
               
               {/* DELETE */}
               <button
-                className="px-4 py-2 rounded-full bg-gradient-to-r from-[#E85D04] via-[#9D0208] to-[#4B0000] text-white hover:from-[#f06a1a] hover:to-[#3a0000] transition-all"
+                className="px-4 py-2 rounded-full bg-gradient-to-r from-[#E85D04] via-[#9D0208] to-[#4B0000] text-white hover:from-[#f06a1a] hover:to-[#3a0000] transition-all cursor-pointer"
                 onClick={ async () => {
                   const res = await deleteProfile();
                     if (res.message) {

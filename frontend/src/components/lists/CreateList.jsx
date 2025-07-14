@@ -10,7 +10,7 @@ export default function CreateList() {
       const res = await createList(formData);
       if ( res.savedList ) {
         console.log(res.message);
-        navigate('/lists')
+        navigate('/lists', { replace: true })
       } else {
         console.log(res.error);
       }
@@ -25,7 +25,7 @@ export default function CreateList() {
             </p>
 
             {/* CREATE-NEW-LIST FORM----------------------------------------------------- */}
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-5 w-full">
 
                 {/* LIST-NAME */}
                 <div className="inpOp flex flex-col sm:flex-row sm:items-center sm:gap-5">

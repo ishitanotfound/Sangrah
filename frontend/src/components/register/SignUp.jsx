@@ -8,6 +8,7 @@
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const [exists, setExists ] = useState(false);
 
     const handleSignup = async (e) => {
       e.preventDefault();
@@ -16,8 +17,10 @@
       if (res.token) { // response mein humme token mil rha h
         localStorage.setItem("token", res.token); // jo token mila h usse set kr rhe h
         console.log(res.message);
-        navigate("/lists"); 
+        setExists(false);
+        navigate("/lists", { replace: true }); 
       } else {
+        setExists(true);
         console.log("Signup error", res.error);
       }
     };
@@ -56,8 +59,10 @@
               <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} name="password" id="password" placeholder="Enter password" />
             </div>
 
+            {exists && <p className="text-red-600 text-center">Username or Email is already taken!</p>}
+
             {/* SUBMIT BUTTON */}
-            <button className="w-full py-3 font-cinzel text-white rounded-full bg-gradient-to-r from-[#f6b36a] via-[#FF7601] to-[#d84b00] hover:from-[#f39553] hover:to-[#c74000] transition-all duration-300 shadow-md hover:shadow-xl">
+            <button className="w-full py-3 font-cinzel text-white rounded-full bg-gradient-to-r from-[#f6b36a] via-[#FF7601] to-[#d84b00] hover:from-[#f39553] hover:to-[#c74000] transition-all duration-300 shadow-md hover:shadow-xl cursor-pointer">
               Submit
             </button>
           </form>

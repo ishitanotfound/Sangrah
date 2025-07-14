@@ -9,7 +9,6 @@ export default function Groups() {
   const [showModal, setShowModal] = useState(false);
   const dropdownRef = useRef([]);
   const [group, setGroup] = useState([]);
-  const { id } = useParams();
 
   useEffect(() => {
       const getGroups = async () => {
@@ -63,6 +62,7 @@ export default function Groups() {
 
         {/* ALL-GROUP-CARDS=========================================================*/}
         <div className="group-box w-full pt-2 sm:px-10 flex flex-wrap justify-center sm:justify-start gap-4">
+          { ( group.length === 0) ? <p className="text-center text-gray-600">No Groups to Show!</p> : null }
           {group.map((g,index) => (
             <div
               key={index} // index of each group from groups array
@@ -140,24 +140,26 @@ export default function Groups() {
             </p>
             <div className="flex justify-center gap-3">
               <button
-                className="px-4 py-2 rounded-full border border-gray-400 text-gray-800 hover:bg-gray-100 transition"
+                className="px-4 py-2 rounded-full border border-gray-400 text-gray-800 hover:bg-gray-100 transition cursor-pointer"
                 onClick={() => setShowModal(false)}
               >
                 Cancel
               </button>
               <button
-                className="px-4 py-2 rounded-full bg-gradient-to-r from-[#E85D04] via-[#9D0208] to-[#4B0000] text-white hover:from-[#f06a1a] hover:to-[#3a0000] transition-all"
+                className="px-4 py-2 rounded-full bg-gradient-to-r from-[#E85D04] via-[#9D0208] to-[#4B0000] text-white hover:from-[#f06a1a] hover:to-[#3a0000] transition-all cursor-pointer"
                 onClick={async () => {
                   const res = await deleteGroup(groupToDelete._id);
                   if (res.message) {
                     console.log(res.message);
-                    navigate("/groups"); 
+                    const updated = await fetchGroups();
+                    setGroup(updated.groups);
                   } else {
                     console.log(res.error);
                   }
                   setShowModal(false); 
                 }}
               >
+                {/* DELETE GROUP */}
                 Delete
               </button>
             </div>

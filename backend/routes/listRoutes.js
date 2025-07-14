@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const List = require('../models/List')
+const Group = require('../models/Group')
 const verifyToken = require('../middleware/authMiddleware'); 
+const User = require("../models/User");
 
 // LISTS------------------------------------------------
 
@@ -33,9 +35,9 @@ router.post('/', verifyToken, async (req, res) => {
 // VIEW ALL LISTS
 router.get('/', verifyToken, async (req, res) => { 
   try{
-    const lists = await List.find({ createdBy: req.user.id, group: null }); // {_id, name, fromDate, toDate, createdBy, taska, group}
+    const lists = await List.find({ createdBy: req.user.id, group: null }); 
     if(lists.length === 0) return res.status(404).json({error: "No lists found!"});
-    res.status(200).json({message: 'All lists fetched!', lists})
+    res.status(200).json({message: 'All lists fetched!', lists}) // list of lists
   } catch (err) {
     console.log('Error in showing all lists', err);
     res.status(500).json({error: err.message});
@@ -50,14 +52,29 @@ router.put('/:id', verifyToken, async (req, res) => {
 
     const { name, fromDate, toDate } = req.body;
 
-    const list = await List.findOne({ _id: id, createdBy: req.user.id });
-    if ( !list ) return res.status(404).json({error: "List not found!"});
+    const list = await List.findById(id).populate('group'); //list!
+    if (!list) return res.status(404).json({ error: "List not found!" });
+
+    if (list.group === null) {
+      if (list.createdBy.toString() !== req.user.id) {
+        return res.status(403).json({ error: 'Not authorized to modify this personal list!' });
+      }
+    } else {
+      const memberIds = list.group.members;
+      if (!memberIds.includes(req.user.id)) {
+        return res.status(403).json({ error: 'Not authorized. Not a group member!' });
+      }
+    }
 
     if (name) list.name = name;
     if (fromDate) list.fromDate = fromDate;
     if (toDate) list.toDate = toDate;
 
     await list.save();
+
+    if (list.group !== null) {
+      return res.status(200).json({message: "Group List updated successfully!", list, group_id: list.group._id});
+    }
 
     return res.status(200).json({message: "List updated successfully!", list});
   }
@@ -70,21 +87,35 @@ router.put('/:id', verifyToken, async (req, res) => {
 // DELETE A LIST
 router.delete('/:id', verifyToken, async (req, res) => { 
     try {
-        const { id } = req.params;
+        const { id } = req.params; // list_id
         if ( !id ) return res.status(401).json({error : 'List ID not provided!'});
         
-        const list = await List.deleteOne({ _id: id, createdBy: req.user.id});
-        if( list.deletedCount === 0 ) return res.status(404).json({error: 'List not found!'});
+        const list = await List.findById(id).populate('group');
+        if (!list) return res.status(404).json({ error: "List not found!" }); //***
+
+        if (list.group === null) {
+          if (list.createdBy.toString() !== req.user.id) {
+            return res.status(403).json({ error: 'Not authorized to delete this personal list!' });
+          }
+        } else {
+          const memberIds = list.group.members;
+          if (!memberIds.includes(req.user.id)) {
+            return res.status(403).json({ error: 'Not authorized. Not a group member!' });
+          }
+        }
+
+        // Delete the list
+        await List.deleteOne({ _id: id });
 
         // If list was part of a group, remove it from group.lists
         if (list.group) {
           await Group.updateOne(
-            { _id: list.group },
+            { _id: list.group._id },
             { $pull: { lists: list._id } }
           );
         }
-        
-        res.status(200).json({message: 'deleted list successfully'});
+
+        res.status(200).json({ message: 'Deleted list successfully'});
     } catch(err) {
         console.log("Error in deleting list", err);
         res.status(500).json({error: err.message});

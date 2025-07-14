@@ -3,10 +3,10 @@ import { createGroup } from "../../api/groupAPI";
 import { useForm } from "react-hook-form";
 
 export default function CreateGroup() {
-    const navigate = useNavigate();
-    const { register, handleSubmit, watch, formState:{errors}} = useForm();
+  const navigate = useNavigate();
+  const { register, handleSubmit, watch, formState:{errors}} = useForm();
 
-    const onSubmit = async (data) => {
+  const onSubmit = async (data) => {
   const formData = new FormData();
 
   formData.append('name', data.name);
@@ -20,7 +20,7 @@ export default function CreateGroup() {
 
   if (res.group) {
     console.log(res.message);
-    navigate('/groups');
+    navigate('/groups', { replace: true });
   } else {
     console.log(res.error);
   }
@@ -37,21 +37,21 @@ export default function CreateGroup() {
             </p>
 
             {/* NEW-GROUP FORM -----------------------------------------*/}
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-5 w-full  ">
 
                 {/* GROUP-NAME */}
                 <div className="inpOp flex flex-col sm:flex-row sm:items-center sm:gap-5">
                     <label htmlFor="newGroupName" className="w-full sm:w-1/3 text-right">Name</label>
                     <input type="text" {...register('name', {required: {value:true, message: "Please enter a group name!"}})} id="name" placeholder="Enter new group name" />
-                    {errors.name && <p className="text-red-600">{errors.name.message}</p>}
                 </div>
+                {errors.name && <p className="text-red-600">{errors.name.message}</p>}
                 
                 {/* USERNAMES, dekhna array mein hi jana chahiye */}
                 <div className="inpOp flex flex-col sm:flex-row sm:items-center sm:gap-5">
                     <label htmlFor="newGroupPeople" className="w-full sm:w-1/3 text-right">Members</label>
-                    <input type="text" {...register('memberUsernames', {required:{value:true, message: "Please provide the members' usernames!"}})} id="newGroupMembers" placeholder="Enter group members' usernames" />
-                    {errors.memberUsernames && <p className="text-red-600">{errors.memberUsernames.message}</p>}
+                    <input type="text" {...register('memberUsernames', {required:{value:true, message: "Please provide the members' usernames!"}})} id="newGroupMembers" placeholder="Enter group members' usernames" />                    
                 </div>
+                {errors.memberUsernames && <p className="text-red-600">{errors.memberUsernames.message}</p>}
                 
                 {/* GROUP-PICTURE */}
                 <div className="inpOp flex flex-col sm:flex-row sm:items-center sm:gap-5">

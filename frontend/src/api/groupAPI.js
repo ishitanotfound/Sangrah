@@ -24,7 +24,7 @@ export const fetchGroups = async () => {
     const res = await axios.get(`${baseURL}/api/groups`, {
       headers: getAuthHeader(),
     });
-    return res.data; // should return { message: ..., group: {_id, name,createdBy,members,groupPic,lists} }
+    return res.data; // should return { message: ..., groups: {{_id, name,createdBy,members,groupPic,lists}} }
   } catch (error) {
     return { error: error.response?.data?.error || "Something went wrong" };
   }
@@ -75,7 +75,7 @@ export const createGList = async (id, data) => {
   }
 }
 
-// VIEW ALL LISTS
+// VIEW ALL GROUPS LIST
 export const fetchGLists = async (id) => {
   try {
     const res = await axios.get(`${baseURL}/api/groups/${id}`, {

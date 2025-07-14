@@ -25,8 +25,7 @@ function App() {
         <Route path="/" element={<Hero />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />
-        <Route path="/lists" element={<Lists/>} />
-        {/* <Route path="/lists/:id" element={<Lists/>} /> */}
+        <Route path="/lists" element={<Lists/>} /> 
         <Route path="/listShow/:id" element={<ListShow/>} />
         <Route path="/createList" element={<CreateList/>} />
         <Route path="/updateList/:id" element={<UpdateList />} />

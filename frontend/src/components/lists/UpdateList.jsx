@@ -4,7 +4,7 @@ import { updateList } from "../../api/listAPI";
 
 
 export default function UpdateList() {
-    const { id } = useParams(); 
+    const { id } = useParams();  // list_id
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm();
 
@@ -13,9 +13,9 @@ export default function UpdateList() {
         if (res.list) {
             console.log(res.message);
             if(res.list.group){
-                return navigate(`/groupView/${res.list.group}`);
+                return navigate(`/groupView/${res.group_id}`); //*** group_id
             }
-            navigate('/lists');
+            navigate('/lists', { replace: true });
         } else {
             console.log(res.error);
         }
@@ -34,7 +34,7 @@ export default function UpdateList() {
             <p className="text-center">( Change required options only! Leave rest as it is.  )</p>
 
             {/* UPDATE FROM ----------------------------------------------*/}
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-5 w-full">
 
                 {/* LIST-NAME */}
                 <div className="inpOp flex flex-col sm:flex-row sm:items-center sm:gap-5">

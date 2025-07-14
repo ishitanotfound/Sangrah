@@ -1,10 +1,12 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { loginUser } from "../../api/userAPI";
+import { useState } from "react";
 
 export default function Login() {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
+  const [invalid, setInvalid ] = useState(false);
 
   const onSubmit = async (data) => {
     const res = await loginUser(data);
@@ -12,8 +14,10 @@ export default function Login() {
     if (res.token) {
       localStorage.setItem("token", res.token);
       console.log(res.message);
-      navigate("/lists");
+      setInvalid(false);
+      navigate("/lists", { replace: true });
     } else {
+      setInvalid(true);
       console.log("Login error", res.error);
     }
   };
@@ -31,7 +35,8 @@ export default function Login() {
           {/* USERNAME */}
           <div className="inpOp flex flex-col sm:flex-row sm:items-center sm:gap-5">
             <label htmlFor="name" className="w-full sm:w-1/3 text-right">Username</label>
-            <input type="text" {...register("username")} id="username" placeholder="Enter username" />
+            <input type="text" {...register("username")} 
+            id="username" placeholder="Enter username" />
           </div>
 
           {/* PASSWORD */}
@@ -40,8 +45,10 @@ export default function Login() {
             <input type="password" {...register("password")} id="password" placeholder="Enter password" />
           </div>
 
+          {invalid && <p className="text-red-600 text-center">Invalid Login Credentials!</p>}
+
           {/* SUBMIT BUTTON */}
-          <button className="w-full py-3 font-cinzel text-white rounded-full bg-gradient-to-r from-[#f6b36a] via-[#FF7601] to-[#d84b00] hover:from-[#f39553] hover:to-[#c74000] transition-all duration-300 shadow-md hover:shadow-xl">
+          <button className="w-full py-3 font-cinzel text-white rounded-full bg-gradient-to-r from-[#f6b36a] via-[#FF7601] to-[#d84b00] hover:from-[#f39553] hover:to-[#c74000] transition-all duration-300 shadow-md hover:shadow-xl cursor-pointer">
             Submit
           </button>
         </form>
