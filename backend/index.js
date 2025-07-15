@@ -15,7 +15,7 @@ console.log("🔐 Loaded MONGO_URI:", process.env.MONGO_URI);
 connectDB(); 
 
 const corsOptions = {
-  origin: ['http://localhost:5173', 'https://sangrah-ten.vercel.app'], // frontend deployed domain here
+  origin: ['http://localhost:5173', 'https://sangrah-ten.vercel.app'], 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 };
