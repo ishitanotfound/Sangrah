@@ -4,8 +4,9 @@ Sangrah is a spiritual and collaborative productivity app that lets you organize
 
 📱 **Fully Responsive** — Mobile, Tablet, Desktop friendly   
 
-<img src="frontend/public/Hero.png" alt="Hero Page" width="500"/>   
-![Hero Page](frontend/public/tab.png) ![Hero Page](frontend/public/mobile.png)   
+<img src="frontend/public/Hero.png" alt="Hero Page-desktop" width="500"/>  
+<img src="frontend/public/tab.png" alt="Hero Page-tab"/>  
+<img src="frontend/public/mobile.png" alt="Hero Page-mobile"/>   
 
 🔒 **Secure & Smooth** — JWT auth, persistent login  
 🪶 **Spiritual Touch** — Gita quotes on every to-do list page
