@@ -5,11 +5,11 @@ Sangrah is a spiritual and collaborative productivity app that lets you organize
 📱 **Fully Responsive** — Mobile, Tablet, Desktop friendly   
 
 Desktop View:-   
-<img src="./screenshots/public/Hero.png" alt="Hero Page-desktop" width="500"/>   
+<img src="./screenshots/Hero.png" alt="Hero Page-desktop" width="500"/>   
 Tablet View:-   
-<img src="./screenshots/public/tab.png" alt="Hero Page-tab" width="250"/>   
+<img src="./screenshots/tab.png" alt="Hero Page-tab" width="250"/>   
 Mobile View:-   
-<img src="./screenshots/public/mobile.png" alt="Hero Page-mobile" width="250"/>   
+<img src="./screenshots/mobile.png" alt="Hero Page-mobile" width="250"/>   
 
 🔒 **Secure & Smooth** — JWT auth, persistent login  
 🪶 **Spiritual Touch** — Gita quotes on every to-do list page
@@ -26,14 +26,14 @@ Backend 👉 [Render Deployment](https://sangrah-backend.onrender.com)
 - Subtle animations powered by **GSAP**
 - Simple call-to-action for login/signup
 
-![Hero Page](./screenshots/public/Hero.png)
+![Hero Page](./screenshots/Hero.png)
 
 ### 🔐 Authentication
 - Secure SignUp and Login using **JWT tokens**
 - Upload **Display Picture** from Accounts
 - Session persistence (stays logged in for 7 days)
 
-![Login Page](./screenshots/public/Login.png)
+![Login Page](./screenshots/Login.png)
 
 
 ### ✅ Lists
@@ -43,7 +43,7 @@ Backend 👉 [Render Deployment](https://sangrah-backend.onrender.com)
 - Track progress visually with **completion bars**
 - Edit, update, and delete your lists anytime
 
-![List Page](./screenshots/public/list.png)
+![List Page](./screenshots/list.png)
 
 ### 👥 Groups
 - Create groups with a **name** and optional **group picture**
@@ -52,14 +52,14 @@ Backend 👉 [Render Deployment](https://sangrah-backend.onrender.com)
 - All group members can **collaboratively edit shared lists**
 - Rename or delete groups/lists
 
-![Group Page](./screenshots/public/groups.png)
-![GroupList Page](./screenshots/public/groupList.png)
+![Group Page](./screenshots/groups.png)
+![GroupList Page](./screenshots/groupList.png)
 
 ### ⚙️ Account Settings
 - View your profile: **Name**, **Username**, **Email**, **Display Picture**
 - Edit profile info, delete account, and logout easily
 
-![Account Page](./screenshots/public/acc.png)
+![Account Page](./screenshots/acc.png)
 
 ---
 
