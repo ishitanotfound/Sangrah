@@ -73,9 +73,9 @@ Backend 👉 [Render Deployment](https://sangrah-backend.onrender.com)
 ## 📂 Folder Structure
 
 ### Frontend
-src/```
-├── api/```
-│ ├── userAPI.js ```
+src/   
+├── api/   
+│ ├── userAPI.js   
 │ ├── listAPI.js
 │ ├── groupAPI.js
 | └── authHeader.js 
