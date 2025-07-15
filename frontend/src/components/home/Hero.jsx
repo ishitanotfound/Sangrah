@@ -80,17 +80,17 @@ export default function Hero() {
         
         {/* LEAVES -------------------------------------------------*/}
 
-        <img className='left-leaf absolute w-45 -left-10 top-5 sm:top-0 sm:w-60 lg:w-auto' src="left-leaf.png" alt="left-leaf" />
-        <img className='right-leaf absolute w-45 -right-10 bottom-65 sm:top-5 sm:w-60 lg:w-auto' src="right-leaf.png" alt="right-leaf" />
+        <img className='left-leaf absolute w-45 -left-10 top-2 md:top-10 lg:top-0 md:w-80 xl:w-auto' src="left-leaf.png" alt="left-leaf" />
+        <img className='right-leaf absolute w-45 -right-10 bottom-65 sm:top-40 lg:top-5 md:w-80 lg:w-auto' src="right-leaf.png" alt="right-leaf" />
         
        {/* SANGRAH TITLE AND LOGIN BUTTON-------------------------- */}
 
-        <div className="absolute top-40 sm:top-20 left-1/2 -translate-x-1/2 -translate-y-1/2; flex flex-col items-center gap-3 sm:gap-5">   
+        <div className="absolute top-40 sm:top-25 md:top-40 lg:top-20 left-1/2 -translate-x-1/2 -translate-y-1/2; flex flex-col items-center gap-3 sm:gap-5">   
 
             {/* SANGRAH-HERO-TITLE          */}
             <h1 className="title font-cinzel text-center w-70 md:w-auto text-5xl md:text-6xl xl:text-8xl font-semibold">SANGRAH</h1>
 
-            {/* GITA-QUOTE */}
+            {/* SUB-TITLE */}
             <p className="font-cinzel text-2xl text-[#9D0208] text-center opacity-0 animate-[fadeInUp_0.6s_ease-out_2s_forwards]">
             Your space to collect, organize, and share life’s to-dos with those who matter.
             </p>
@@ -104,7 +104,7 @@ export default function Hero() {
         
         {/* lotus ----------------------------------------------------*/}
 
-        <img className='lotus z-2 w-380 absolute bottom-20 lg:top-70' src="lotus3.webp" alt="Lotus"/>
+        <img className='lotus z-2 w-380 absolute bottom-20 md:top-90 lg:top-70' src="lotus3.webp" alt="Lotus"/>
 
     </section>
   )
