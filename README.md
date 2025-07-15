@@ -13,13 +13,15 @@ Backend 👉 [Render Deployment](https://sangrah-backend.onrender.com)
 - Spiritual design with **morpankhs (peacock feathers)** and **lotus flowers**
 - Subtle animations powered by **GSAP**
 - Simple call-to-action for login/signup
-![Hero Page](frontend/public/Hero.png);
+
+![Hero Page](frontend/public/Hero.png)
 
 ### 🔐 Authentication
 - Secure SignUp and Login using **JWT tokens**
 - Upload **Display Picture** from Accounts
 - Session persistence (stays logged in for 7 days)
-![Login Page](frontend/public/Login.png);
+
+![Login Page](frontend/public/Login.png)
 
 
 ### ✅ Lists
@@ -28,7 +30,8 @@ Backend 👉 [Render Deployment](https://sangrah-backend.onrender.com)
 - Each list page displays a **rotating Bhagavad Gita teaching**
 - Track progress visually with **completion bars**
 - Edit, update, and delete your lists anytime
-![List Page](frontend/public/list.png);
+
+![List Page](frontend/public/list.png)
 
 ### 👥 Groups
 - Create groups with a **name** and optional **group picture**
@@ -36,13 +39,15 @@ Backend 👉 [Render Deployment](https://sangrah-backend.onrender.com)
 - Share or link your lists with group members
 - All group members can **collaboratively edit shared lists**
 - Rename or delete groups/lists
-![Group Page](frontend/public/groups.png);
-![GroupList Page](frontend/public/groupList.png);
+
+![Group Page](frontend/public/groups.png)
+![GroupList Page](frontend/public/groupList.png)
 
 ### ⚙️ Account Settings
 - View your profile: **Name**, **Username**, **Email**, **Display Picture**
 - Edit profile info, delete account, and logout easily
-![Account Page](frontend/public/acc.png);
+
+![Account Page](frontend/public/acc.png)
 
 ---
 
