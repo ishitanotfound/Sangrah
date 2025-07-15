@@ -2,6 +2,11 @@
 
 Sangrah is a spiritual and collaborative productivity app that lets you organize your personal tasks and collaborate on shared goals with friends or teams. Rooted in calm aesthetics like **morpankhs** and **lotus flowers**, Sangrah brings focus and serenity to your productivity.
 
+📱 **Fully Responsive** — Mobile, Tablet, Desktop friendly  
+![Hero Page](frontend/public/Hero.png) ![Hero Page](frontend/public/mobile.png)
+🔒 **Secure & Smooth** — JWT auth, persistent login  
+🪶 **Spiritual Touch** — Gita quotes on every to-do list page
+
 Live Demo 👉 [Frontend on Vercel](https://sangrah-ten.vercel.app)  
 Backend 👉 [Render Deployment](https://sangrah-backend.onrender.com)
 

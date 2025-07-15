@@ -104,7 +104,7 @@ export default function Hero() {
         
         {/* lotus ----------------------------------------------------*/}
 
-        <img className='lotus z-2 w-380 absolute bottom-20 sm:top-70' src="lotus3.webp" alt="Lotus"/>
+        <img className='lotus z-2 w-380 absolute bottom-20 lg:top-70' src="lotus3.webp" alt="Lotus"/>
 
     </section>
   )
